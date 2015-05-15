@@ -21,11 +21,19 @@
 
 (defn api-routes [file]
   (routes
-   (GET "/quip" req
-     (let [quip (get-quip)]
-       {:status 200 :body {:quip "abc"}}))
-   (POST))
-  #_ (INSERT ROUTES HERE))
+   (POST "/quips" req
+     (let [quips (file/save-quips file req)]
+       {:status 201 :body quips}))
+   (GET "/quips/random" req
+     (let [quip (file/fetch-random file)]
+       {:status 200 :body quip}))
+   (GET "/quips/count" req
+     (let [count (file/count-quips file)]
+       {:status 200 :body count}))
+   (DELETE "/quips" req
+     (file/clear-quips file)
+     {:status 204})
+))
 
 (defn app [file]
   (-> (api-routes file)
