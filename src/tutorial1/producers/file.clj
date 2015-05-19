@@ -3,16 +3,15 @@
             [clojure.data.json :as json]))
 
 ;; your code goes here
-(defn get-quip [file]
-  ("abc"))
-
 (defn save-quips [file quips]
   (let [new (:body quips)]
-    (spit file (json/write-str (distinct (:quips new))))
+    (spit file (json/write-str (:quips new)))
         new))
 
 (defn fetch-quips [file]
-  (json/read-str (slurp file)))
+  (let [output (json/read-str (slurp file))]
+    (println output)
+    output))
 
 (defn fetch-random [file]
   (let [quips (fetch-quips file)]
