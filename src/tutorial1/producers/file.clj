@@ -9,9 +9,7 @@
         new))
 
 (defn fetch-quips [file]
-  (let [output (json/read-str (slurp file))]
-    (println output)
-    output))
+  (json/read-str (slurp file)))
 
 (defn fetch-random [file]
   (let [quips (fetch-quips file)]
